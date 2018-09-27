@@ -15,4 +15,5 @@ RUN wget -O 走評估nnet3.sh https://github.com/sih4sing5hong5/kaldi/raw/taiwan
 RUN sed "s/nj\=[0-9]\+/nj\=${CPU_CORE}/g" -i 走評估nnet3.sh
 RUN bash -c 'time bash -x 走評估nnet3.sh data/lang_free tshi3/train_free'
 
-RUN bash -c 'time bash 看結果.sh' # tri4 nia
+RUN bash -c 'cat exp/chain/tdnn_1a_sp/decode_train_dev/wer_* | grep WER | ./utils/best_wer.sh'
+
