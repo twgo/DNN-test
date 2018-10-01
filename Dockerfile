@@ -1,4 +1,4 @@
-ARG TSHI=204
+ARG TSHI=224
 FROM dockerhub.iis.sinica.edu.tw/gi2-gian5_boo5-hing5:${TSHI} as tsuliau
 
 FROM dockerhub.iis.sinica.edu.tw/dnn-train:twgo
