@@ -16,9 +16,26 @@ COPY --from=tsuliau /usr/local/pian7sik4_gi2liau7/20171027tan_60ku /usr/local/pi
 
 WORKDIR $KALDI_S5C
 
+COPY --from=twgo/gi2gian5-boo5hing-hun3lian7 /opt/bun1.arpa .
+COPY --from=twgo/gi2gian5-boo5hing-hun3lian7 /opt/bun3.arpa .
+RUN gzip bun1.arpa && gzip bun3.arpa
+RUN mkdir -p hethong/dict
+RUN cp -r data/local/dict/[^l]* hethong/dict
+COPY lexicon.txt hethong/dict/lexicon.txt
+RUN utils/prepare_lang.sh hethong/dict "<UNK>" hethong/local/lang_log hethong/lang_dict
+RUN utils/format_lm.sh hethong/lang_dict bun1.arpa.gz hethong/dict/lexicon.txt hethong/lang
+RUN utils/build_const_arpa_lm.sh bun3.arpa.gz hethong/lang hethong/lang-3grams
+
+
 RUN wget -O 走評估nnet3.sh https://github.com/sih4sing5hong5/kaldi/raw/taiwanese/egs/taiwanese/s5c/%E8%B5%B0%E8%A9%95%E4%BC%B0nnet3.sh
 RUN sed "s/nj\=[0-9]\+/nj\=${CPU_CORE}/g" -i 走評估nnet3.sh
-RUN bash -c 'time bash -x 走評估nnet3.sh data/lang_free tshi3/train_free'
+RUN bash -c 'time bash -x 走評估nnet3.sh hethong/lang tshi3/train'
+RUN steps/lmrescore_const_arpa.sh \
+  --nj $nj --cmd "$decode_cmd" \
+  --online-ivector-dir exp/nnet3/ivectors_test \
+  --stage 3 \
+  hethong/lang hethong/lang-3grams \
+  $dir/decode_train_dev $dir/decode_train_dev_rescoring
 
 RUN bash -c 'cat exp/chain/tdnn_1a_sp/decode_train_dev/wer_* | grep WER | ./utils/best_wer.sh'
 CMD bash -c 'cat exp/chain/tdnn_1a_sp/decode_train_dev/wer_* | grep WER | ./utils/best_wer.sh'
