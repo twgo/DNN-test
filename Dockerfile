@@ -1,4 +1,4 @@
-ARG TSHI=238
+ARG TSHI=215
 FROM dockerhub.iis.sinica.edu.tw/gi2-gian5_boo5-hing5:${TSHI} as tsuliau
 
 FROM dockerhub.iis.sinica.edu.tw/dnn-train:twgo
@@ -12,7 +12,7 @@ ENV KALDI_S5C /usr/local/kaldi/egs/formosa/s5
 
 
 COPY --from=tsuliau $SIANN_KALDI_S5C/tshi3 $KALDI_S5C/tshi3
-COPY --from=tsuliau /usr/local/pian7sik4_gi2liau7/20171027tan_60ku /usr/local/pian7sik4_gi2liau7/20171027tan_60ku
+COPY --from=tsuliau /usr/local/pian7sik4_gi2liau7/kati_liokim /usr/local/pian7sik4_gi2liau7/kati_liokim
 
 WORKDIR $KALDI_S5C
 
