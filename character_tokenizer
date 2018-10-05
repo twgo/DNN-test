@@ -1,0 +1,1 @@
+awk '{printf $1""FS; for(i=2; i<=NF; ++i) {gsub(/-/," ",$i);gsub(/[0-9]/,"",$i); printf $i""FS"";} print "" }'

@@ -27,16 +27,15 @@ RUN utils/format_lm.sh hethong/lang_dict bun1.arpa.gz hethong/dict/lexicon.txt h
 RUN utils/build_const_arpa_lm.sh bun3.arpa.gz hethong/lang hethong/lang-3grams
 
 
+COPY character_tokenizer local/character_tokenizer
 RUN wget -O 走評估nnet3.sh https://github.com/sih4sing5hong5/kaldi/raw/taiwanese/egs/taiwanese/s5c/%E8%B5%B0%E8%A9%95%E4%BC%B0nnet3.sh
 RUN sed "s/nj\=[0-9]\+/nj\=${CPU_CORE}/g" -i 走評估nnet3.sh
 RUN bash -c 'time bash -x 走評估nnet3.sh hethong/lang tshi3/train'
 RUN steps/lmrescore_const_arpa.sh \
-  --nj $nj --cmd "$decode_cmd" \
-  --online-ivector-dir exp/nnet3/ivectors_test \
-  --stage 3 \
   hethong/lang hethong/lang-3grams \
-  $dir/decode_train_dev $dir/decode_train_dev_rescoring
+  tshi3/train exp/chain/tdnn_1a_sp/decode_train_dev exp/chain/tdnn_1a_sp/decode_train_dev_rescoring
 
-RUN bash -c 'cat exp/chain/tdnn_1a_sp/decode_train_dev/wer_* | grep WER | ./utils/best_wer.sh'
-CMD bash -c 'cat exp/chain/tdnn_1a_sp/decode_train_dev/wer_* | grep WER | ./utils/best_wer.sh'
+RUN bash -c 'cat exp/chain/tdnn_1a_sp/decode_train_dev_rescoring/wer_* | grep WER | ./utils/best_wer.sh'
+RUN bash -c 'cat exp/chain/tdnn_1a_sp/decode_train_dev_rescoring/cer_* | grep WER | ./utils/best_wer.sh'
+CMD bash -c 'cat exp/chain/tdnn_1a_sp/decode_train_dev_rescoring/wer_* | grep WER | ./utils/best_wer.sh'
 
