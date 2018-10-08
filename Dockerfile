@@ -27,6 +27,7 @@ RUN utils/format_lm.sh hethong/lang_dict bun1.arpa.gz hethong/dict/lexicon.txt h
 RUN utils/build_const_arpa_lm.sh bun3.arpa.gz hethong/lang hethong/lang-3grams
 
 
+RUN sed -i 's/ [^｜]*｜//g' tshi3/train/text
 RUN mv tshi3/train/utt2spk tshi3/train/utt2spk.ku
 RUN cat tshi3/train/utt2spk.ku | awk '{print $1" "$1}' > tshi3/train/utt2spk
 COPY character_tokenizer local/character_tokenizer
