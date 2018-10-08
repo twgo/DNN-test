@@ -28,6 +28,7 @@ RUN utils/build_const_arpa_lm.sh bun3.arpa.gz hethong/lang hethong/lang-3grams
 
 
 COPY character_tokenizer local/character_tokenizer
+RUN sed -i 's/-r 16k/-r 8k/g' tshi3/train*/wav.scp
 RUN wget -O 走評估nnet3.sh https://github.com/sih4sing5hong5/kaldi/raw/taiwanese/egs/taiwanese/s5c/%E8%B5%B0%E8%A9%95%E4%BC%B0nnet3.sh
 RUN sed "s/nj\=[0-9]\+/nj\=${CPU_CORE}/g" -i 走評估nnet3.sh
 RUN bash -c 'time bash -x 走評估nnet3.sh hethong/lang tshi3/train'
