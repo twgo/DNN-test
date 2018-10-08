@@ -26,6 +26,8 @@ RUN utils/format_lm.sh hethong/lang_dict bun1.arpa.gz hethong/dict/lexicon.txt h
 RUN utils/build_const_arpa_lm.sh bun3.arpa.gz hethong/lang hethong/lang-3grams
 
 
+RUN mv tshi3/train/utt2spk tshi3/train/utt2spk.ku
+RUN cat tshi3/train/utt2spk.ku | awk '{print $1" "$1}' > tshi3/train/utt2spk
 COPY character_tokenizer local/character_tokenizer
 RUN wget -O 走評估nnet3.sh https://github.com/sih4sing5hong5/kaldi/raw/taiwanese/egs/taiwanese/s5c/%E8%B5%B0%E8%A9%95%E4%BC%B0nnet3.sh
 RUN sed "s/nj\=[0-9]\+/nj\=${CPU_CORE}/g" -i 走評估nnet3.sh
