@@ -16,8 +16,8 @@ COPY --from=tsuliau /usr/local/pian7sik4_gi2liau7/20171027tan_60ku /usr/local/pi
 
 WORKDIR $KALDI_S5C
 
-COPY --from=twgo/gi2gian5-boo5hing-hun3lian7:5ban /opt/bun1.arpa .
-COPY --from=twgo/gi2gian5-boo5hing-hun3lian7:5ban /opt/bun3.arpa .
+COPY --from=twgo/gi2gian5-boo5hing-hun3lian7:10ban /opt/bun1.arpa .
+COPY --from=twgo/gi2gian5-boo5hing-hun3lian7:10ban /opt/bun3.arpa .
 RUN gzip bun1.arpa && gzip bun3.arpa
 RUN mkdir -p hethong/dict
 RUN cp -r data/local/dict/[^l]* hethong/dict
