@@ -12,7 +12,7 @@ ENV KALDI_S5C /usr/local/kaldi/egs/formosa/s5
 
 
 COPY --from=tsuliau $SIANN_KALDI_S5C/tshi3 $KALDI_S5C/tshi3
-COPY --from=tsuliau /usr/local/pian7sik4_gi2liau7/20171027tan_60ku /usr/local/pian7sik4_gi2liau7/20171027tan_60ku
+COPY --from=tsuliau /usr/local/pian7sik4_gi2liau7/mtko-thaumaiku /usr/local/pian7sik4_gi2liau7/mtko-thaumaiku
 
 WORKDIR $KALDI_S5C
 
@@ -29,7 +29,7 @@ RUN utils/build_const_arpa_lm.sh bun3.arpa.gz hethong/lang hethong/lang-3grams
 
 COPY character_tokenizer local/character_tokenizer
 RUN wget -O 走評估nnet3.sh https://github.com/sih4sing5hong5/kaldi/raw/taiwanese/egs/taiwanese/s5c/%E8%B5%B0%E8%A9%95%E4%BC%B0nnet3.sh
-RUN sed "s/nj\=[0-9]\+/nj\=${CPU_CORE}/g" -i 走評估nnet3.sh
+RUN sed "s/nj\=[0-9]\+/nj\=8/g" -i 走評估nnet3.sh
 RUN bash -c 'time bash -x 走評估nnet3.sh hethong/lang tshi3/train'
 RUN steps/lmrescore_const_arpa.sh \
   hethong/lang hethong/lang-3grams \
