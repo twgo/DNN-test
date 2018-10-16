@@ -32,6 +32,8 @@ RUN sed "s/nj\=[0-9]\+/nj\=${CPU_CORE}/g" -i 走評估nnet3.sh
 RUN mv tshi3/train/wav.scp tshi3/train/wav.scp.ku
 RUN grep PN > tshi3/train/wav.scp < tshi3/train/wav.scp.ku
 RUN utils/fix_data_dir.sh tshi3/train/
+
+RUN sed 's/nj\=[0-9]\+/nj\=8/g' -i 走評估.sh
 RUN bash -c 'time bash -x 走評估nnet3.sh hethong/lang tshi3/train'
 RUN steps/lmrescore_const_arpa.sh \
   hethong/lang hethong/lang-3grams \
