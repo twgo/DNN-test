@@ -22,11 +22,9 @@ RUN gzip bun1.arpa && gzip bun3.arpa
 RUN mkdir -p hethong/dict
 RUN cp -r data/local/dict/[^l]* hethong/dict
 COPY lexicon.txt lexicon_guan.txt
-RUN cat lexicon.txt | \
-  sed 's/\([^-｜1]\)0/\13/g' | \
-  sed '/\([^-｜]\)6/d' | \
-  sed '/uⁿ8/d' | \
-  sed '/m9/d' | \
+COPY error_silence error_silence
+RUN cat error_silence.txt | sed 's/.*line //g' | sed 's/)/d/g' > error_cmd 
+RUN sed -f error_cmd lexicon.txt | \
   cat > hethong/dict/lexicon.txt
 RUN utils/prepare_lang.sh hethong/dict "<UNK>" hethong/local/lang_log hethong/lang_dict
 RUN utils/format_lm.sh hethong/lang_dict bun1.arpa.gz hethong/dict/lexicon.txt hethong/lang
