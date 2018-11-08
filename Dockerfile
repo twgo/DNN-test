@@ -21,7 +21,13 @@ COPY --from=twgo/gi2gian5-boo5hing-hun3lian7 /opt/bun3.arpa .
 RUN gzip bun1.arpa && gzip bun3.arpa
 RUN mkdir -p hethong/dict
 RUN cp -r data/local/dict/[^l]* hethong/dict
-COPY lexicon.txt hethong/dict/lexicon.txt
+COPY lexicon.txt lexicon_guan.txt
+RUN cat lexicon.txt | \
+  sed 's/\([^-｜1]\)0/\13/g' | \
+  sed '/\([^-｜]\)6/d' | \
+  sed '/uⁿ8/d' | \
+  sed '/m9/d' | \
+  cat > hethong/dict/lexicon.txt
 RUN utils/prepare_lang.sh hethong/dict "<UNK>" hethong/local/lang_log hethong/lang_dict
 RUN utils/format_lm.sh hethong/lang_dict bun1.arpa.gz hethong/dict/lexicon.txt hethong/lang
 RUN utils/build_const_arpa_lm.sh bun3.arpa.gz hethong/lang hethong/lang-3grams
