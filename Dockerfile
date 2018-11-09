@@ -24,7 +24,7 @@ RUN cp -r data/local/dict/[^l]* hethong/dict
 COPY lexicon.txt lexicon_guan.txt
 COPY error_silence.txt error_silence.txt
 RUN cat error_silence.txt | sed 's/.*line //g' | sed 's/)/d/g' > error_cmd 
-RUN sed -f error_cmd lexicon.txt | \
+RUN sed -f error_cmd lexicon_guan.txt | \
   sort -u > hethong/dict/lexicon.txt
 RUN utils/prepare_lang.sh hethong/dict "<UNK>" hethong/local/lang_log hethong/lang_dict
 RUN utils/format_lm.sh hethong/lang_dict bun1.arpa.gz hethong/dict/lexicon.txt hethong/lang
