@@ -22,7 +22,7 @@ RUN gzip bun1.arpa && gzip bun3.arpa
 RUN mkdir -p hethong/dict
 RUN cp -r data/local/dict/[^l]* hethong/dict
 COPY lexicon.txt lexicon_guan.txt
-COPY error_silence error_silence
+COPY error_silence.txt error_silence.txt
 RUN cat error_silence.txt | sed 's/.*line //g' | sed 's/)/d/g' > error_cmd 
 RUN sed -f error_cmd lexicon.txt | \
   cat > hethong/dict/lexicon.txt
