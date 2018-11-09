@@ -22,7 +22,7 @@ RUN gzip bun1.arpa && gzip bun3.arpa
 RUN mkdir -p hethong/dict
 RUN cp -r data/local/dict/[^l]* hethong/dict
 COPY lexicon.txt lexicon_guan.txt
-RUN cat lexicon.txt | \
+RUN cat lexicon_guan.txt | \
   sed 's/\([^-｜1]\)0/\13/g' | \
   sed '/\([^-｜]\)6/d' | \
   sed '/uⁿ8/d' | \
