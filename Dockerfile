@@ -39,7 +39,13 @@ RUN steps/lmrescore_const_arpa.sh \
   hethong/lang hethong/lang-3grams \
   tshi3/train exp/chain/tdnn_1a_sp/decode_train_dev exp/chain/tdnn_1a_sp/decode_train_dev_rescoring
 
+COPY character_tokenizer_lmj local/character_tokenizer
+RUN steps/lmrescore_const_arpa.sh \
+  hethong/lang hethong/lang-3grams \
+  tshi3/train exp/chain/tdnn_1a_sp/decode_train_dev exp/chain/tdnn_1a_sp/decode_train_dev_rescoring_lmj
+
 RUN bash -c 'cat exp/chain/tdnn_1a_sp/decode_train_dev_rescoring/wer_* | grep WER | ./utils/best_wer.sh'
+RUN bash -c 'cat exp/chain/tdnn_1a_sp/decode_train_dev_rescoring_lmj/cer_* | grep WER | ./utils/best_wer.sh' | sed 's/WER/LMJER/g'
 RUN bash -c 'cat exp/chain/tdnn_1a_sp/decode_train_dev_rescoring/cer_* | grep WER | ./utils/best_wer.sh' | sed 's/WER/SER/g'
 CMD bash -c 'cat exp/chain/tdnn_1a_sp/decode_train_dev_rescoring/wer_* | grep WER | ./utils/best_wer.sh'
 
